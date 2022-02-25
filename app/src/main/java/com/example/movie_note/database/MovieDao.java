@@ -5,20 +5,22 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
+import com.example.movie_note.entity.Movie;
+
 import java.util.List;
 
 @Dao
 public interface MovieDao {
     @Insert
-    void insert(FavoriteMovie movie);
+    void insert(Movie movie);
 
     @Delete
-    void delete(FavoriteMovie movie);
+    void delete(Movie movie);
 
-    @Query("DELETE FROM FavoriteMovie WHERE movieId=:id")
+    @Query("DELETE FROM Movie WHERE movieId=:id")
     void deleteById(long id);
 
-    @Query("SELECT * FROM FavoriteMovie")
-    List<FavoriteMovie> getMovies();
+    @Query("SELECT * FROM Movie")
+    List<Movie> getMovies();
 
 }

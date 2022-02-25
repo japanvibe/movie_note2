@@ -1,10 +1,16 @@
 package com.example.movie_note.entity;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-
+import java.util.ArrayList;
+import java.util.List;
+@Entity
 public class Movie implements Serializable {
+    @PrimaryKey(autoGenerate = false)
     @SerializedName("id")
     private long movieId;
 
@@ -35,9 +41,10 @@ public class Movie implements Serializable {
         this.overview = overview;
         this.rating = rating;
         this.date = date;
-        this.genres = genres;
+        this.genres=genres;
         this.favorite=false;
     }
+
 
     public long getMovieId() {
         return movieId;
@@ -107,6 +114,7 @@ public class Movie implements Serializable {
     public String toString() {
         return "Movie{" +
                 "title='" + title + '\'' +
+                ", favorite=" + favorite +
                 '}';
     }
 }

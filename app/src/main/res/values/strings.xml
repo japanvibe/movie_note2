@@ -4,6 +4,15 @@
     <string name="input_find">поиск фильма</string>
     <string name="open">open</string>
     <string name="close">close</string>
-    <string name="prev">prev</string>
-    <string name="next">next</string>
+    <string name="prev">назад</string>
+    <string name="next">вперед</string>
+    <string name="cancel">отмена</string>
+    <string name="favorites">Мои фильмы</string>
+    <string name="trending">Тренды недели</string>
+    <string name="genres">Поиск по жанрам</string>
+    <string name="add">добавить</string>
+    <string name="remove">удалить</string>
+    <string name="add_movie">Фильм добавлен в избранные</string>
+    <string name="remove_movie">Фильм удален из избранных</string>
+    <string name="choose_genres">Выберите жанры</string>
 </resources>

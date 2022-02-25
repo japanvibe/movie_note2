@@ -1,11 +1,13 @@
 package com.example.movie_note.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,7 +15,6 @@ import android.widget.Toast;
 import com.example.movie_note.MainActivity;
 import com.example.movie_note.R;
 import com.example.movie_note.api.ApiData;
-import com.example.movie_note.database.FavoriteMovie;
 import com.example.movie_note.entity.Movie;
 import com.squareup.picasso.Picasso;
 
@@ -27,11 +28,12 @@ public class MovieGridAdapter extends BaseAdapter {
     private List<Movie> movies;
     private LayoutInflater inflater;
     private Toast toast;
-    public MovieGridAdapter(Context context, List<Movie> movies) {
+    private boolean favorites;
+    public MovieGridAdapter(Context context, List<Movie> movies, boolean favorites) {
         this.movies=movies;
+        this.favorites=favorites;
         inflater = LayoutInflater.from(context);
     }
-
     @Override
     public int getCount() {
         return movies.size();
@@ -67,21 +69,24 @@ public class MovieGridAdapter extends BaseAdapter {
         sdf=new SimpleDateFormat("yyyy");
         tvDate.setText(sdf.format(dateObject));
         tvRating.setText(String.valueOf(movies.get(i).getRating()));
-        if(movies.get(i).isFavorite())btnAddRemove.setText("удалить");
-        else btnAddRemove.setText("добавить");
+        if(movies.get(i).isFavorite()) {
+            btnAddRemove.setText(R.string.remove);
+            btnAddRemove.setBackgroundColor(Color.MAGENTA);
+        }
+        else btnAddRemove.setText(R.string.add);
         btnAddRemove.setOnClickListener(v->{
             if(!movies.get(i).isFavorite()) {
-                MainActivity.movieDao.insert(new FavoriteMovie(movies.get(i).getTitle(),movies.get(i).getMovieId()));
                 movies.get(i).setFavorite(true);
-                btnAddRemove.setText("удалить");
+                MainActivity.getMovieDao().insert(movies.get(i));
+                btnAddRemove.setText(R.string.remove);
                 toast = Toast.makeText(inflater.getContext(),
-                        "Фильм добавлен в избранные", Toast.LENGTH_SHORT);
+                        R.string.add_movie, Toast.LENGTH_SHORT);
             } else {
-                MainActivity.movieDao.deleteById(movies.get(i).getMovieId());
+                MainActivity.getMovieDao().deleteById(movies.get(i).getMovieId());
                 movies.get(i).setFavorite(false);
-                btnAddRemove.setText("add");
+                if(favorites)movies.remove(i);
                 toast = Toast.makeText(inflater.getContext(),
-                        "Фильм удален из избранных", Toast.LENGTH_SHORT);
+                        R.string.remove_movie, Toast.LENGTH_SHORT);
             }
             toast.show();
             notifyDataSetChanged();
