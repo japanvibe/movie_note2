@@ -220,6 +220,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 trendingSearch=true;
                 btnNext.setOnClickListener(v->getTrending(v));
                 btnPrev.setOnClickListener(v->getTrending(v));
+                closeKeyboard();
                 drawerLayout.close();
                 page=ApiData.getInitialPage();
                 Call<Result> call = movieApi.getTrending(
@@ -228,6 +229,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_filters:
                 filteredGenres.clear();
+                closeKeyboard();
+                drawerLayout.close();
                 builder=new AlertDialog.Builder(MainActivity.this);
                 builder.setPositiveButton(R.string.button_find, new DialogInterface.OnClickListener() {
                     @Override
@@ -262,7 +265,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
                 });
                 genresDialog=builder.create();
-                drawerLayout.close();
                 genresDialog.show();
                 break;
         }
